@@ -8,12 +8,15 @@ from fastapi.middleware.cors import CORSMiddleware
 import mysql.connector as mycon
 import numbering
 import CodeMasta
+import Parts
 import logging
 
 
 app = FastAPI()
 app.include_router(numbering.router)
 app.include_router(CodeMasta.router)
+app.include_router(Parts.router)
+
 
 # CORSの設定　クロスオリジンのIP許可List
 origins = [
