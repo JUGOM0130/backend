@@ -6,24 +6,28 @@ import mysql.connector as mycon     # SQL接続
 from pydantic import BaseModel
 from fastapi import APIRouter
 from typing import Union
-SELECT = """SELECT `m_parts`.`pid`,
-                `m_parts`.`pctid`,
-                `m_parts`.`pcd`,
-                `m_parts`.`pname`,
-                `m_parts`.`ppname`,
-                `m_parts`.`prevision`,
-                `m_parts`.`pvendor`,
-                `m_parts`.`ptype`,
-                `m_parts`.`pmaterial`,
-                `m_parts`.`pio`,
-                `m_parts`.`pmtlmain_cost`,
-                `m_parts`.`pmtlsub_cost`,
-                `m_parts`.`pprocdict_cost`,
-                `m_parts`.`pprocsub_cost`
-            FROM `a_system`.`m_parts`;
+SELECT = """
+    SELECT
+        `m_parts`.`pid`,
+        `m_parts`.`pctid`,
+        `m_parts`.`pcd`,
+        `m_parts`.`pname`,
+        `m_parts`.`ppname`,
+        `m_parts`.`prevision`,
+        `m_parts`.`pvendor`,
+        `m_parts`.`ptype`,
+        `m_parts`.`pmaterial`,
+        `m_parts`.`pio`,
+        `m_parts`.`pmtlmain_cost`,
+        `m_parts`.`pmtlsub_cost`,
+        `m_parts`.`pprocdict_cost`,
+        `m_parts`.`pprocsub_cost`
+    FROM
+        `a_system`.`m_parts`;
         """
 INSERT = """
-        INSERT INTO `a_system`.`m_parts`
+    INSERT INTO
+        `a_system`.`m_parts`
         (`pctid`,
         `pcd`,
         `pname`,
@@ -37,15 +41,31 @@ INSERT = """
         `pmtlsub_cost`,
         `pprocdict_cost`,
         `pprocsub_cost`)
-        VALUES
+    VALUES
         (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
 """
 IS_DATA = """
             SELECT `m_parts`.`pid`
             FROM `a_system`.`m_parts`
-            WHERE `m_parts`.`pctid` = %s;
+            WHERE `m_parts`.`pctid` = %s
+            LIMIT 1;
 """
-
+UPDATE = """
+    UPDATE `a_system`.`m_parts`
+    SET
+    `pname` = %s,
+    `ppname` = %s,
+    `prevision` = %s,
+    `pvendor` = %s,
+    `ptype` = %s,
+    `pmaterial` = %s,
+    `pio` = %s,
+    `pmtlmain_cost` = %s,
+    `pmtlsub_cost` = %s,
+    `pprocdict_cost` = %s,
+    `pprocsub_cost` = %s
+    WHERE `pid` = %s;
+"""
 
 router = APIRouter(
     prefix='/parts',
@@ -82,17 +102,15 @@ def read(kind: int):
         if cnx.is_connected:
             logging.debug("connected")
         cursor = cnx.cursor(dictionary=True)
-        if kind == 0:
-            select_sql = """
-                SELECT * FROM a_system.m_code;
-            """
+        is_data_sql = f"""
+            SELECT * FROM a_system.m_parts WHERE pid = {kind};
+        """
+        cursor.execute(is_data_sql)
+        row = cursor.fetchone()
+        if row:
+            return row
         else:
-            select_sql = f"""
-                SELECT * FROM a_system.m_code WHERE ctkind = {kind};
-            """
-        cursor.execute(select_sql)
-        mcode_list = cursor.fetchall()
-        return mcode_list
+            return {"message": "登録がありません"}
 
     except Exception as e:
         print(f"Error Occurred: {e}")
@@ -142,6 +160,44 @@ def regist(req: Parts):
             cnx.close()
             cursor.close()
             return {"message": f"{rowcnt} Inserted"}
+    except Exception as e:
+        print(f"Error Occurred: {e}")
+        return {"message": e}
+    finally:
+        if cnx is not None and cnx.is_connected():
+            cnx.close()
+
+
+@router.post('/update')
+def update(req: Parts):
+    logging.debug(req)
+    cnx = None
+    try:
+
+        cnx = mycon.connect(
+            user=CONST.CONST['user'],  # ユーザー名
+            password=CONST.CONST['pw'],  # パスワード
+            host=CONST.CONST['host']  # ホスト名(IPアドレス）
+        )
+        if cnx.is_connected:
+            logging.debug("\tconnected")
+        cursor = cnx.cursor()
+        cursor.execute(UPDATE, (req.pname,
+                                req.ppname,
+                                req.prevision,
+                                req.pvendor,
+                                req.ptype,
+                                req.pmaterial,
+                                req.pio,
+                                req.pmtlmain_cost,
+                                req.pmtlsub_cost,
+                                req.pprocdict_cost,
+                                req.pprocsub_cost,
+                                req.pid,))
+        cnx.commit()
+        cnx.close()
+        cursor.close()
+        return {"message": "Update Ok"}
     except Exception as e:
         print(f"Error Occurred: {e}")
         return {"message": e}

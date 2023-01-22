@@ -46,11 +46,35 @@ def read(kind: int):
         cursor = cnx.cursor(dictionary=True)
         if kind == 0:
             select_sql = """
-                SELECT * FROM a_system.m_code;
+                SELECT
+                    `m_code`.`ctid`,
+                    `m_code`.`ctkind`,
+                    `m_code`.`cthead`,
+                    `m_code`.`ctenumber`,
+                    `m_code`.`ctnumber`,
+                    `m_code`.`ctfoot`,
+                    `m_parts`.`pname`,
+                    `m_parts`.`pid`
+                FROM
+                    `a_system`.`m_code` LEFT JOIN `a_system`.`m_parts`
+                        ON `m_code`.`ctid` = `m_parts`.`pctid`
             """
         else:
             select_sql = f"""
-                SELECT * FROM a_system.m_code WHERE ctkind = {kind};
+                SELECT
+                    `m_code`.`ctid`,
+                    `m_code`.`ctkind`,
+                    `m_code`.`cthead`,
+                    `m_code`.`ctenumber`,
+                    `m_code`.`ctnumber`,
+                    `m_code`.`ctfoot`,
+                    `m_parts`.`pname`,
+                    `m_parts`.`pid`
+                FROM
+                    `a_system`.`m_code` LEFT JOIN `a_system`.`m_parts`
+                        ON `m_code`.`ctid` = `m_parts`.`pctid`
+                WHERE
+                    m_code.ctkind = {kind};
             """
         cursor.execute(select_sql)
         mcode_list = cursor.fetchall()
@@ -87,6 +111,7 @@ def regist(req: CodeTaikei):
                 AND m_code.ctnumber = %s
                 AND m_code.ctenumber = %s
                 AND m_code.ctfoot = %s
+            LIMIT 1;
         """
         cursor.execute(isreg_sql, (req.ctkind, req.cthead,
                        req.ctnumber, req.ctenumber, req.ctfoot))
