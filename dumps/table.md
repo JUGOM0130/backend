@@ -11,7 +11,6 @@
 ||toroku|登録日|DATEDATETIME||NN CURRENT_TIMESTAMP|
 ||kosin|更新日|DATEDATETIME||NN CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP|
 
-
 ## <div style="color:#FF5">コードテーブル　「m_code」</div>
 |PK|カラム名|カラム名|型|桁数|その他|
 |:-:|:--|:--|:--|:--|:--|
@@ -41,5 +40,5 @@
 ||pmtlsub_cost|補助材料費|INT|||
 ||pprocdict_cost|外注加工費|INT|||
 ||pprocsub_cost|直接労務費|INT|||
-|||登録日|DATEDATETIME||NN CURRENT_TIMESTAMP|
+||toroku|登録日|DATEDATETIME||NN CURRENT_TIMESTAMP|
 ||ptype|更新日|DATEDATETIME||NN CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP|
