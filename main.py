@@ -10,11 +10,12 @@ import numbering
 import CodeMasta
 import Parts
 import logging
-
+import CodeTemplate
 
 app = FastAPI()
 app.include_router(numbering.router)
 app.include_router(CodeMasta.router)
+app.include_router(CodeTemplate.router)
 app.include_router(Parts.router)
 
 

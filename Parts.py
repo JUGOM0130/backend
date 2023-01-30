@@ -9,7 +9,7 @@ from typing import Union
 SELECT = """
     SELECT
         `m_parts`.`pid`,
-        `m_parts`.`pctid`,
+        `m_parts`.`pcid`,
         `m_parts`.`pcd`,
         `m_parts`.`pname`,
         `m_parts`.`ppname`,
@@ -28,7 +28,7 @@ SELECT = """
 INSERT = """
     INSERT INTO
         `a_system`.`m_parts`
-        (`pctid`,
+        (`pcid`,
         `pcd`,
         `pname`,
         `ppname`,
@@ -47,7 +47,7 @@ INSERT = """
 IS_DATA = """
             SELECT `m_parts`.`pid`
             FROM `a_system`.`m_parts`
-            WHERE `m_parts`.`pctid` = %s
+            WHERE `m_parts`.`pcid` = %s
             LIMIT 1;
 """
 UPDATE = """
@@ -75,7 +75,7 @@ router = APIRouter(
 
 class Parts(BaseModel):
     pid: Union[int, None]
-    pctid: Union[int, None]
+    pcid: Union[int, None]
     pcd: Union[str, None]
     pname: Union[str, None]
     ppname: Union[str, None]
@@ -134,7 +134,7 @@ def regist(req: Parts):
         if cnx.is_connected:
             logging.debug("connected")
         cursor = cnx.cursor()
-        cursor.execute(IS_DATA, (req.pctid,))
+        cursor.execute(IS_DATA, (req.pcid,))
         isdata = cursor.fetchall()
         # データが登録されているかの判定
         logging.debug(isdata)
@@ -142,7 +142,7 @@ def regist(req: Parts):
             logging.debug("既にデータが登録されています。")
             return {"message": "既にデータが登録されています。"}
         else:
-            cursor.execute(INSERT, (req.pctid,
+            cursor.execute(INSERT, (req.pcid,
                                     req.pcd,
                                     req.pname,
                                     req.ppname,
