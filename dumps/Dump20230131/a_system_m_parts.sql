@@ -16,22 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `m_staff`
+-- Table structure for table `m_parts`
 --
 
-DROP TABLE IF EXISTS `m_staff`;
+DROP TABLE IF EXISTS `m_parts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `m_staff` (
-  `scode` int NOT NULL AUTO_INCREMENT,
-  `sname1` varchar(45) NOT NULL,
-  `sname2` varchar(45) NOT NULL,
-  `sname3` varchar(45) DEFAULT NULL,
-  `sname4` varchar(45) DEFAULT NULL,
+CREATE TABLE `m_parts` (
+  `pid` int NOT NULL AUTO_INCREMENT,
+  `pcid` int NOT NULL,
+  `pcd` varchar(45) NOT NULL,
+  `pname` varchar(45) NOT NULL,
+  `ppname` varchar(45) NOT NULL,
+  `prevision` varchar(45) DEFAULT NULL COMMENT 'リビジョン',
+  `pvendor` varchar(45) DEFAULT NULL COMMENT '手配先',
+  `ptype` varchar(45) DEFAULT NULL COMMENT '型式',
+  `pmaterial` varchar(45) DEFAULT NULL,
+  `pio` varchar(45) DEFAULT NULL,
+  `pmtlmain_cost` int DEFAULT NULL,
+  `pmtlsub_cost` int DEFAULT NULL,
+  `pprocdict_cost` int DEFAULT NULL,
+  `pprocsub_cost` int DEFAULT NULL,
   `toroku` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `kosin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`scode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`pid`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -43,4 +52,4 @@ CREATE TABLE `m_staff` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-26 20:41:18
+-- Dump completed on 2023-01-31 21:53:21

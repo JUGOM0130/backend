@@ -16,20 +16,21 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `m_numbering`
+-- Table structure for table `m_staff`
 --
 
-DROP TABLE IF EXISTS `m_numbering`;
+DROP TABLE IF EXISTS `m_staff`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `m_numbering` (
-  `id` varchar(45) NOT NULL,
-  `no` int NOT NULL DEFAULT '1',
-  `name` varchar(45) NOT NULL,
-  `biko` varchar(200) DEFAULT NULL,
+CREATE TABLE `m_staff` (
+  `scode` int NOT NULL AUTO_INCREMENT,
+  `sname1` varchar(45) NOT NULL,
+  `sname2` varchar(45) NOT NULL,
+  `sname3` varchar(45) DEFAULT NULL,
+  `sname4` varchar(45) DEFAULT NULL,
   `toroku` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `kosin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  `kosin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`scode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -42,4 +43,4 @@ CREATE TABLE `m_numbering` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-20  8:00:20
+-- Dump completed on 2023-01-31 21:53:20

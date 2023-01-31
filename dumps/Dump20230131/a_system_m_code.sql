@@ -16,21 +16,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `m_numbering`
+-- Table structure for table `m_code`
 --
 
-DROP TABLE IF EXISTS `m_numbering`;
+DROP TABLE IF EXISTS `m_code`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `m_numbering` (
-  `id` varchar(45) NOT NULL,
-  `no` int NOT NULL DEFAULT '1',
-  `name` varchar(45) NOT NULL,
-  `biko` varchar(200) DEFAULT NULL,
+CREATE TABLE `m_code` (
+  `cid` int NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `ckind` int DEFAULT NULL COMMENT '種類\\n組：１\\n部品：２\\n購入品：３\\n',
+  `chead` varchar(10) DEFAULT NULL COMMENT 'コード体系のヘッダ\\nXXX-AA001-ZZZZ\\nXXXに該当する部分',
+  `cenumber` varchar(5) DEFAULT NULL COMMENT 'コード体系の採番部分（英文字）\\nXXX-AA001-ZZZZ\\nAAに該当する部分',
+  `cnumber` int DEFAULT NULL COMMENT 'コード体系の番号\\nXXX-AA001-ZZZZ\\n001に該当する部分',
+  `cfoot` varchar(10) DEFAULT NULL COMMENT 'コード体系の末尾\\nXXX-AA001-ZZZZ\\nZZZZに該当する部分',
   `toroku` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `kosin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `kosin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`cid`)
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -42,4 +44,4 @@ CREATE TABLE `m_numbering` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-26 20:41:17
+-- Dump completed on 2023-01-31 21:53:21

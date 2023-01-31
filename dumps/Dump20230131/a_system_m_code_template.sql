@@ -16,24 +16,21 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `m_tori`
+-- Table structure for table `m_code_template`
 --
 
-DROP TABLE IF EXISTS `m_tori`;
+DROP TABLE IF EXISTS `m_code_template`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `m_tori` (
-  `tid` int NOT NULL AUTO_INCREMENT,
-  `tname1` varchar(45) DEFAULT NULL,
-  `tname2` varchar(45) DEFAULT NULL,
-  `zipcd` varchar(45) DEFAULT NULL,
-  `address1` varchar(45) DEFAULT NULL,
-  `address2` varchar(45) DEFAULT NULL,
-  `address3` varchar(45) DEFAULT NULL,
-  `address4` varchar(45) DEFAULT NULL,
-  `tel1` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`tid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `m_code_template` (
+  `ctid` int NOT NULL AUTO_INCREMENT,
+  `ctkind` int NOT NULL,
+  `cthead` varchar(10) NOT NULL,
+  `ctenumber` varchar(5) NOT NULL,
+  `toroku` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `kosin` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ctid`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -45,4 +42,4 @@ CREATE TABLE `m_tori` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-26 20:41:19
+-- Dump completed on 2023-01-31 21:53:20
