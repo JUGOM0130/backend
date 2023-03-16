@@ -11,13 +11,14 @@ import CodeMasta
 import Parts
 import logging
 import CodeTemplate
+import Tree
 
 app = FastAPI()
 app.include_router(numbering.router)
 app.include_router(CodeMasta.router)
 app.include_router(CodeTemplate.router)
 app.include_router(Parts.router)
-
+app.include_router(Tree.router)
 
 # CORSの設定　クロスオリジンのIP許可List
 origins = [
