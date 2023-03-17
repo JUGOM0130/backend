@@ -1,0 +1,4 @@
+uvicorn
+fastapi
+mysql
+mysql.connector

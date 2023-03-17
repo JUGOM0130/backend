@@ -3,6 +3,7 @@
 # 400 Bad Request :　どこのIPから許可するかを設定で解決
 # 422 Unprocessable Entity : 型が理解できないエラー（バリデーションを設けてあげる
 # クラスに指定した値は全て存在しないとエラーとなるみたい
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import mysql.connector as mycon
@@ -34,6 +35,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+if __name__ == "__main__":
+    uvicorn.run(app,host="127.0.0.1",port=8000)
 
 """
 @app.get('/testinsert')
