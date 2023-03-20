@@ -27,7 +27,8 @@ def getRootList():
             user=CONST.CONST['user'],  # ユーザー名
             password=CONST.CONST['pw'],  # パスワード
             host=CONST.CONST['host'],  # ホスト名(IPアドレス）
-            database=CONST.CONST['db']  # データベース名
+            database=CONST.CONST['db'],  # データベース名
+            auth_plugin='mysql_native_password'
         )
 
         cursor = cnx.cursor(dictionary=True)

@@ -96,7 +96,8 @@ def regist(req: CodeTaikei):
         cnx = mycon.connect(
             user=CONST.CONST['user'],  # ユーザー名
             password=CONST.CONST['pw'],  # パスワード
-            host=CONST.CONST['host']  # ホスト名(IPアドレス）
+            host=CONST.CONST['host'],  # ホスト名(IPアドレス）
+            auth_plugin='mysql_native_password'
         )
         if cnx.is_connected:
             logging.debug("connected")

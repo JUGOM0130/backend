@@ -31,6 +31,7 @@ def createNumber(request: Numbering):
             user=CONSTR['user'],  # ユーザー名
             password=CONSTR['pw'],  # パスワード
             host=CONSTR['host']  # ホスト名(IPアドレス）
+            ,auth_plugin='mysql_native_password'
         )
         if cnx.is_connected:
             print("Connected!")
@@ -70,6 +71,7 @@ def readNumber():
             password=CONSTR['pw'],  # パスワード
             host=CONSTR['host'],  # ホスト名(IPアドレス）
             database=CONSTR['db']  # データベース名
+            ,auth_plugin='mysql_native_password'
         )
 
         cursor = cnx.cursor()

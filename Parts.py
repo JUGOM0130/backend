@@ -98,6 +98,7 @@ def read(kind: int):
             user=CONST.CONST['user'],  # ユーザー名
             password=CONST.CONST['pw'],  # パスワード
             host=CONST.CONST['host']  # ホスト名(IPアドレス）
+            ,auth_plugin='mysql_native_password'
         )
         if cnx.is_connected:
             logging.debug("connected")
@@ -130,6 +131,7 @@ def regist(req: Parts):
             user=CONST.CONST['user'],  # ユーザー名
             password=CONST.CONST['pw'],  # パスワード
             host=CONST.CONST['host']  # ホスト名(IPアドレス）
+            ,auth_plugin='mysql_native_password'
         )
         if cnx.is_connected:
             logging.debug("connected")
@@ -178,6 +180,7 @@ def update(req: Parts):
             user=CONST.CONST['user'],  # ユーザー名
             password=CONST.CONST['pw'],  # パスワード
             host=CONST.CONST['host']  # ホスト名(IPアドレス）
+            ,auth_plugin='mysql_native_password'
         )
         if cnx.is_connected:
             logging.debug("\tconnected")
