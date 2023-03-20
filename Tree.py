@@ -1,16 +1,36 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
-import mysql.connector as mycon     # SQL接続
-import CONST                        # 共通定数ファイル
 import datetime as dt               # 日付
 import logging
-
-
+from typing import Union
+import MysqlConnector
+import mysql.connector
 router = APIRouter(
     prefix='/tree',
     tags=['tree']
 )
 
+reg_sql = """
+    INSERT INTO `a_system`.`t_tree_table`
+    (`tree_id`,
+    `composition_id`,
+    `parts_id`,
+    `toroku`,
+    `kosin`)
+    VALUES
+    (<{tree_id: }>,
+    <{composition_id: }>,
+    <{parts_id: }>,
+    <{toroku: CURRENT_TIMESTAMP}>,
+    <{kosin: CURRENT_TIMESTAMP}>);
+
+"""
+
+
+class TreeRegistData(BaseModel):
+    tree_id:int
+    composition_id:int
+    parts_id:int
 
 @router.get('/get_root_list')
 def getRootList():
@@ -21,28 +41,24 @@ def getRootList():
         `m_parts`.`pname`
     FROM `a_system`.`m_parts`;
     """
-    cnx = None
     try:
-        cnx = mycon.connect(
-            user=CONST.CONST['user'],  # ユーザー名
-            password=CONST.CONST['pw'],  # パスワード
-            host=CONST.CONST['host'],  # ホスト名(IPアドレス）
-            database=CONST.CONST['db'],  # データベース名
-            auth_plugin='mysql_native_password'
-        )
-
-        cursor = cnx.cursor(dictionary=True)
+        
+        mci = MysqlConnector.Connector()
+        cursor = mci.get_cursor()
+        print(type(cursor))
         cursor.execute(sql)
         data = cursor.fetchall()
         rowcnt = cursor.rowcount
-        cursor.close()
 
-        logging.debug(list)
+        logging.debug(data)
 
         return {"result": {"status": "OK", "message": f"{rowcnt} getDatas", "data": data}}
     except Exception as e:
         print(f"Error Occurred: {e}")
         return {"result": {"status": "ERR", "message": f"Error Occurred: {e}"}}
     finally:
-        if cnx is not None and cnx.is_connected():
-            cnx.close()
+        mci.close()
+        
+@router.post('/tree_regist')
+def tree_regist(td:TreeRegistData):
+    print("")
